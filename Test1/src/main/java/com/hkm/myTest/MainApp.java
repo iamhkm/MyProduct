@@ -3,11 +3,6 @@ package com.hkm.myTest;
 import java.util.Scanner;
 
 public class MainApp {
-	
-	  final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	  final String DB_URL = "jdbc:mysql://localhost/library";
-	  final String USER = "root";
-	  final String PASS = "hkm0101";
 
 	   public String start() {
 		   return "success";
