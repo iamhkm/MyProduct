@@ -27,7 +27,7 @@ public class Test {
 			
 	  }
 	  
-	  void addProduct(){
+	  protected void addProduct(){
 		  System.out.println("Enter Product ID");
 		  String id = in.nextLine();
 		  System.out.println("Enter Product Name");
@@ -51,14 +51,14 @@ public class Test {
 			ps.setString(4,product.getInAvailable());
 			  
 			ps.executeUpdate();  
-			
+			ps.close();
 		} catch (SQLException e) {
 			System.out.println("error.....check if id already exist or check input again...");
 		}
 		   
 	   }
 	   
-	   void editProduct(){
+	   protected void editProduct(){
 		   System.out.println("Enter Product ID");
 			  String id = in.nextLine();
 			  System.out.println("Enter Product Name");
@@ -81,13 +81,13 @@ public class Test {
 				ps.setString(3,product.getInAvailable());
 				ps.setString(4,product.getId());
 				ps.executeUpdate();  
-				
+				ps.close();
 			} catch (SQLException e) {
 				System.out.println("error.....check if id already exist or check input again...");
 			}
 	   }
 	   
-	   void viewProduct(){
+	   protected void viewProduct(){
 		      System.out.println("Enter Product ID");
 			  String id = in.nextLine();
 			  
@@ -100,26 +100,28 @@ public class Test {
 				else{
 					System.out.println("error.....no such id exist");
 				}
-				
+				ps.close();
+				rs.close();
 			} catch (SQLException e) {
 				System.out.println(e);
 			}
 	   }
 	   
-	   void listProduct(){
+	   protected void listProduct(){
 		   
 		   try {
 				ps = con.prepareStatement("select *from products"); 
 				ResultSet rs = ps.executeQuery();
 				while(rs.next()){
 				System.out.println("ID:"+rs.getString(1)+"\t"+"Name:"+rs.getString(2)+"\tQuantity:"+rs.getInt(3)+"\tIsAvailable:"+rs.getString(4));}
-				
+				ps.close();
+			        rs.close();
 			} catch (SQLException e) {
 				System.out.println(e);
 			}
 	   }
 	   
-	   void nameProduct(){
+	   protected void nameProduct(){
 		      System.out.println("Enter Name of Product");
 			  String id = in.nextLine();
 		   try {
@@ -128,7 +130,8 @@ public class Test {
 				ResultSet rs = ps.executeQuery();
 				while(rs.next()){
 				System.out.println("ID:"+rs.getString(1)+"\t"+"Name:"+rs.getString(2)+"\tQuantity:"+rs.getInt(3)+"\tIsAvailable:"+rs.getString(4));}
-				
+				ps.close();
+			        rs.close();
 			} catch (SQLException e) {
 				System.out.println(e);
 			}
