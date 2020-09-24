@@ -14,7 +14,7 @@ public class MainApp {
 	      
 	      Scanner in = new Scanner(System.in);
 	      int x;
-	      Test test = new Test();
+	      ProductDao test = new ProductDao();
 	      
 	      do{
 	    	  System.out.println("--------------------------------------");
