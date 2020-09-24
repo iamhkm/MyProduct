@@ -17,7 +17,7 @@ public class ProductDao {
 	  Scanner in = new Scanner(System.in);
 	  Product product = new Product();
 	  
-	  Test(){
+	  ProductDao(){
 		  try {
 			Class.forName(JDBC_DRIVER);
 			con = DriverManager.getConnection(DB_URL,USER,PASS);
