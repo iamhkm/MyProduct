@@ -42,13 +42,14 @@ public class ProductDao{
 			  
 			   try(PreparedStatement ps = con.prepareStatement("select *from products where Id=?");) {
 				ps.setString(1,id);
-				ResultSet rs = ps.executeQuery();
+				try(ResultSet rs = ps.executeQuery();){
 				if(rs.next()){
 				System.out.println("ID:"+rs.getString(1)+"\t"+"Name:"+rs.getString(2)+"\tQuantity:"+rs.getInt(3)+"\tIsAvailable:"+rs.getString(4));}
 				else{
 					System.out.println("error.....no such id exist");
 				}
 				rs.close();
+				}
 			} catch (SQLException e) {
 				System.out.println(e);
 			}
@@ -66,11 +67,12 @@ public class ProductDao{
 	   protected void nameProduct(String name){
 		   try (PreparedStatement ps = con.prepareStatement("select *from products where name=?"); ){
 				ps.setString(1, name);
-				ResultSet rs = ps.executeQuery();
+				try(ResultSet rs = ps.executeQuery();){
 				while(rs.next()){
 				System.out.println("ID:"+rs.getString(1)+"\t"+"Name:"+rs.getString(2)+"\tQuantity:"+rs.getInt(3)+"\tIsAvailable:"+rs.getString(4));}
 				rs.close();
-			} catch (SQLException e) {
+			} 
+		   }catch (SQLException e) {
 				System.out.println(e);
 			}
 	   }
