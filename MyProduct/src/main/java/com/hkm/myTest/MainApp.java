@@ -3,7 +3,6 @@ package com.hkm.myTest;
 import java.util.Scanner;
 
 public class MainApp {
-
 	   public String start() {
 		   return "success";
 	   }
@@ -11,10 +10,11 @@ public class MainApp {
 	   public static void main(String[] args) {
 	      MainApp app = new MainApp();
 	      System.out.println(app.start());
-	      
 	      Scanner in = new Scanner(System.in);
+	      
 	      int x;
 	      ProductDao test = new ProductDao();
+	      Product pd = new Product();
 	      
 	      do{
 	    	  System.out.println("--------------------------------------");
@@ -33,7 +33,11 @@ public class MainApp {
 				  int quantity = Integer.parseInt(in.nextLine());
 				  System.out.println("Enter is alive only yes/no");
 				  String isalive = in.nextLine();
-		    	  test.addProduct(id,name,quantity,isalive);break;}
+				  pd.setId(id);
+				  pd.setName(name);
+				  pd.setQuantity(quantity);
+				  pd.setInAvailable(isalive);
+		    	  test.addProduct(pd);break;}
 		      
 		      case 2: {
 		    	  System.out.println("Enter Product ID");
@@ -44,7 +48,11 @@ public class MainApp {
 				  int quantity = Integer.parseInt(in.nextLine());
 				  System.out.println("Enter is alive only yes/no");
 				  String isalive = in.nextLine();
-		    	  test.editProduct(id,name,quantity,isalive);break;}
+				  pd.setId(id);
+				  pd.setName(name);
+				  pd.setQuantity(quantity);
+				  pd.setInAvailable(isalive);
+		    	  test.addProduct(pd);break;}
 		      
 		      case 3: {
 		    	  System.out.println("Enter Product ID");
