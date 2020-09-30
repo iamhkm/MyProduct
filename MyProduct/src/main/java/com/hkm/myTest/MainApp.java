@@ -3,19 +3,15 @@ package com.hkm.myTest;
 import java.util.Scanner;
 
 public class MainApp {
-	   public String start() {
-		   return "success";
-	   }
-
+	  
 	   public static void main(String[] args) {
-	      MainApp app = new MainApp();
-	      System.out.println(app.start());
-	      Scanner in = new Scanner(System.in);
 	      
 	      int x;
-	      ProductDao test = new ProductDao();
+	      //ProductDao test = new ProductDao();
+	      ProductDaoUsingMongo test = new ProductDaoUsingMongo();
 	      Product pd = new Product();
 	      
+	      try(Scanner in = new Scanner(System.in);){
 	      do{
 	    	  System.out.println("--------------------------------------");
 		      System.out.println("What You want to do?");
@@ -52,7 +48,7 @@ public class MainApp {
 				  pd.setName(name);
 				  pd.setQuantity(quantity);
 				  pd.setInAvailable(isalive);
-		    	  test.addProduct(pd);break;}
+		    	  test.editProduct(pd);break;}
 		      
 		      case 3: {
 		    	  System.out.println("Enter Product ID");
@@ -72,5 +68,8 @@ public class MainApp {
 		      }
 		  }while(x!=6);
 	      in.close();
-	   }   
+	   }catch(Exception e){
+		   System.out.println(e);
+	   } 
+	   }
 	}
