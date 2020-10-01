@@ -42,13 +42,13 @@ public class DBConnectionMongo {
     	   /*
     	   ArrayList<Document> ad = new ArrayList<Document>();
     	   
-    	   Document doc = new Document("_Id","1");
+    	   Document doc = new Document("_id","1");
  		   doc.append("_Name","mi");
  		   doc.append("_Quantity", "100");
  		   doc.append("_isLive", "yes");
  		   ad.add(doc);
  		   
- 		   Document doc2 = new Document("_Id","2");
+ 		   Document doc2 = new Document("_id","2");
 		   doc2.append("_Name","samsung");
 		   doc2.append("_Quantity", "100");
 		   doc2.append("_isLive", "yes");
@@ -58,11 +58,11 @@ public class DBConnectionMongo {
  		   try{
  		   mcc.insertMany(ad);
  		   System.out.println("inserted");
- 		   }catch(Exception e){System.out.println(e);}
+ 		   }catch(Exception e){System.out.println("Looks like you are inserting duplicate value");}
  		   
- 		   */
+ 		   
     		
-    	  /*
+    	  
  		  FindIterable<Document> iterDoc = mcc.find();
  			// Getting the iterator
  			Iterator<Document> it = iterDoc.iterator();
@@ -70,7 +70,9 @@ public class DBConnectionMongo {
  				System.out.println(it.next());
  			}
  			
+ 			*/
  			
+ 			/*
 	    	System.out.println("--------------------------------------");
 
  			Bson filter = eq("_Name", "samsung");
@@ -81,7 +83,7 @@ public class DBConnectionMongo {
  				System.out.println(it2.next());
  			}
  			
- 			Bson filter2 = eq("_Id","2");
+ 			Bson filter2 = eq("_id","2");
  			mcc.findOneAndDelete(filter2);
  			
  			FindIterable<Document> iterDoc3 = mcc.find(filter);
@@ -90,13 +92,13 @@ public class DBConnectionMongo {
  			while (it3.hasNext()) {
  				System.out.println(it3.next());
  			}
- 			*/
  			
+ 			*/
  			
  			/*
  			System.out.println("After update");
  			   
-			   mcc.updateOne(new Document("_Id","1"), new Document("$set",new Document("_Name","samsung")));
+			   mcc.updateOne(new Document("_id","1"), new Document("$set",new Document("_Name","samsung")));
 			   System.out.println("ok");
 			   
 			   FindIterable<Document> iterDoc2 = mcc.find();
@@ -109,7 +111,30 @@ public class DBConnectionMongo {
 	 			}
 	 			
     		*/
+    		
+    		
+    	  /*
+  		   Document doc = new Document("_id","1");
+  		   doc.append("_Name","samsung");
+  		   doc.append("_Quantity","100");
+  		   doc.append("_isLive","yes");
+  		   System.out.println("ok");
+  		   Bson filter = eq("_id","1");
+  		   try{
+  			   mcc.findOneAndReplace(filter, doc);
+  			   System.out.println("updated");
+  		       }catch(Exception e){System.out.println(e);} 
+    		
+  		 FindIterable<Document> iterDoc3 = mcc.find(filter);
+			// Getting the iterator
+			Iterator<Document> it3 = iterDoc3.iterator();
+			while (it3.hasNext()) {
+				System.out.println(it3.next());
+			}
+  		   
+  		   */
  		   }
+    		
     	System.out.println("returning mcc");
 		return mcc;
     }

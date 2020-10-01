@@ -9,48 +9,51 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class ProductDaoUsingMongo {
 	
-	DBConnectionMongo dbc = DBConnectionMongo.getInstance();
-	MongoCollection<Document> mongoCollection =dbc.mcClient();
+	//DBConnectionMongo dbc = DBConnectionMongo.getInstance();
+	MongoCollection<Document> mongoCollection =MainApp.mcc;
 	
 	
 	protected void addProduct(Product pd){
-		
-		   System.out.println("ok i'm in addProduct method");
-		   Document doc = new Document("_Id",pd.getId());
-		   doc.append("_Name",pd.getName());
-		   doc.append("_Quantity", pd.getQuantity());
-		   doc.append("_isLive", pd.getInAvailable());
+		   Document doc = new Document("_id",pd.getId());
+		   doc.append("Name",pd.getName());
+		   doc.append("Quantity", pd.getQuantity());
+		   doc.append("isLive", pd.getInAvailable());
 		   System.out.println("ok");
 		   
 		   try{
 		   mongoCollection.insertOne(doc);
+		   System.out.println("Product added successfully.....");
 		   }catch(Exception e){
-			   System.out.println(e);} 
+			   System.out.println("Looks like you are trying to add duplicate value for id:"+pd.getId()+"......");} 
 		   
 	   }
 	
 	protected void editProduct(Product pd){
-		   System.out.println("ok i'm in editProduct method");
-		   Document doc = new Document("_Id",pd.getId());
-		   doc.append("_Name",pd.getName());
-		   doc.append("_Quantity", pd.getQuantity());
-		   doc.append("_isLive", pd.getInAvailable());
+		   Document doc = new Document("_id",pd.getId());
+		   doc.append("Name",pd.getName());
+		   doc.append("Quantity", pd.getQuantity());
+		   doc.append("isLive", pd.getInAvailable());
 		   System.out.println("ok");
-		   
+		   Bson filter = eq("_id", pd.getId());
 		   try{
-			   mongoCollection.updateOne(new Document("_Id",pd.getId()), doc);
-		       }catch(Exception e){System.out.println(e);} 
+			   mongoCollection.findOneAndReplace(filter, doc);
+			   System.out.println("Product detail updated for id:"+pd.getId());
+		       }catch(Exception e){System.out.println("Looks like no such id exist for which you want to update");} 
 	   }
 	
 	protected void viewProduct(String id){
-		Bson filter = eq("_Id", id);
+		Bson filter = eq("_id", id);
 		FindIterable<Document> iterDoc = mongoCollection.find(filter);
 		// Getting the iterator
 		Iterator<Document> it = iterDoc.iterator();
-		while (it.hasNext()) {
-			System.out.println(it.next());
+		if(it.hasNext()){
+			while (it.hasNext()) {
+				System.out.println(it.next());
+			}
 		}
-		
+		else{
+			System.out.println("No such Document Exist");
+		}
 	   }
 	
 	protected void listProduct(){
@@ -63,17 +66,25 @@ public class ProductDaoUsingMongo {
 	   }
 	
 	protected void nameProduct(String name){
-		Bson filter = eq("_Name",name);
+		Bson filter = eq("Name",name);
 		FindIterable<Document> iterDoc = mongoCollection.find(filter);
 		// Getting the iterator
 		Iterator<Document> it = iterDoc.iterator();
-		while (it.hasNext()) {
-			System.out.println(it.next());
+		
+		if(it.hasNext()){
+			while (it.hasNext()) {
+				System.out.println(it.next());
+			}
 		}
+		else{
+			System.out.println("No such Document Exist");
+		}
+		
 	   }
 	
 	protected void deleteProduct(String id){
-		Bson filter = eq("_Id",id);
+		Bson filter = eq("_id",id);
 		mongoCollection.findOneAndDelete(filter);
+		System.out.println("Product deleted");
 	}
 }

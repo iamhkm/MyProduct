@@ -2,10 +2,28 @@ package com.hkm.myTest;
 
 import java.util.Scanner;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
 public class MainApp {
+	static MongoCollection<Document> mcc=null;
 	  
 	   public static void main(String[] args) {
-	      
+		   
+		   try{
+			   MongoClient mc =MongoClients.create("mongodb://localhost:27017");
+	    		System.out.println("connection created");
+	    		MongoDatabase db = mc.getDatabase("library");
+	    		System.out.println("get database");
+	    		mcc = db.getCollection("Product");
+	    		System.out.println("got collection");
+	    	}catch(Exception e){}
+		   
+		   
 	      int x;
 	      //ProductDao test = new ProductDao();
 	      ProductDaoUsingMongo test = new ProductDaoUsingMongo();
@@ -15,7 +33,7 @@ public class MainApp {
 	      do{
 	    	  System.out.println("--------------------------------------");
 		      System.out.println("What You want to do?");
-		      System.out.println("1. Add Product\n2. Edit Product\n3. View Product By Id\n4. List of Products\n5. Product By Name\n6. Exit ");
+		      System.out.println("1. Add Product\n2. Edit Product\n3. View Product By Id\n4. List of Products\n5. Product By Name\n6. Product I'd you want to delete\n7.Exit");
 		      System.out.println("--------------------------------------");
 		      
 		      x = Integer.parseInt(in.nextLine());
@@ -70,7 +88,7 @@ public class MainApp {
 		      
 		      default: System.out.println("wrong input");
 		      }
-		  }while(x!=6);
+		  }while(x!=7);
 	      in.close();
 	   }catch(Exception e){
 		   System.out.println(e);
