@@ -10,16 +10,19 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 public class MainApp {
+	
+	//this object will be used to perform all the CRUD operations
 	static MongoCollection<Document> mcc=null;
 	  
 	   public static void main(String[] args) {
 		   
 		   try{
-			   MongoClient mc =MongoClients.create("mongodb://localhost:27017");
-	    		System.out.println("connection created");
-	    		MongoDatabase db = mc.getDatabase("library");
+			    MongoClient mc =MongoClients.create("mongodb://localhost:27017"); //opening connection
+			    //MongoClient mc = MongoClients.create("mongodb+srv://hkm:hkm%400101@cluster0.pqcrn.mongodb.net/library?retryWrites=true&w=majority");
+			    System.out.println("connection created");
+	    		MongoDatabase db = mc.getDatabase("library"); //connecting to desired database
 	    		System.out.println("get database");
-	    		mcc = db.getCollection("Product");
+	    		mcc = db.getCollection("Product");// open desired collection
 	    		System.out.println("got collection");
 	    	}catch(Exception e){}
 		   
@@ -38,6 +41,8 @@ public class MainApp {
 		      
 		      x = Integer.parseInt(in.nextLine());
 		      switch(x){
+		      
+		      //Adding new Product
 		      case 1: {
 		    	  System.out.println("Enter Product ID");
 				  String id = in.nextLine();
@@ -51,8 +56,10 @@ public class MainApp {
 				  pd.setName(name);
 				  pd.setQuantity(quantity);
 				  pd.setInAvailable(isalive);
-		    	  test.addProduct(pd);break;}
+		    	  test.addProduct(pd);//Calling addProduct Function
+		    	  break;}
 		      
+		      //Editing the detail of Product
 		      case 2: {
 		    	  System.out.println("Enter Product ID");
 				  String id = in.nextLine();
@@ -66,27 +73,37 @@ public class MainApp {
 				  pd.setName(name);
 				  pd.setQuantity(quantity);
 				  pd.setInAvailable(isalive);
-		    	  test.editProduct(pd);break;}
+		    	  test.editProduct(pd); // calling editProduct function
+		    	  break;}
 		      
+		      //Show Product by Id
 		      case 3: {
 		    	  System.out.println("Enter Product ID");
 				  String id = in.nextLine();
-		    	  test.viewProduct(id);break;}
+		    	  test.viewProduct(id);//Calling viewProduct function
+		    	  break;}
 		      
-		      case 4: test.listProduct();break;
+		      //Show complete list of product
+		      case 4: test.listProduct();//Calling listProduct function
+		      break;
 		      
+		      //Show Product by Name
 		      case 5: {
 		    	  System.out.println("Enter Name of Product");
 				  String name = in.nextLine();
-		    	  test.nameProduct(name);break;}
+		    	  test.nameProduct(name);//Calling nameProduct function
+		    	  break;}
 		      
+		      //Deleting the Product
 		      case 6: {System.out.println("Enter id of product you want to delete");
 		               String id = in.nextLine();
-		               test.deleteProduct(id);break;}
+		               test.deleteProduct(id);////Calling deleteProduct function
+		               break;}
 		      
-		      case 7: {System.out.println("Closing program......");System.exit(0);}
+		      //Closing Program
+		      case 7: {System.out.println("Closing program......");System.exit(0);}//Closing Program
 		      
-		      default: System.out.println("wrong input");
+		      default: System.out.println("wrong input");//Error for wrong input
 		      }
 		  }while(x!=7);
 	      in.close();

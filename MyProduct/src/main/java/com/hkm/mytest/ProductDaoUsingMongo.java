@@ -12,7 +12,7 @@ public class ProductDaoUsingMongo {
 	//DBConnectionMongo dbc = DBConnectionMongo.getInstance();
 	MongoCollection<Document> mongoCollection =MainApp.mcc;
 	
-	
+	//function to add new Product to DB
 	protected void addProduct(Product pd){
 		   Document doc = new Document("_id",pd.getId());
 		   doc.append("Name",pd.getName());
@@ -28,6 +28,7 @@ public class ProductDaoUsingMongo {
 		   
 	   }
 	
+	//function to edit Product to DB
 	protected void editProduct(Product pd){
 		   Document doc = new Document("_id",pd.getId());
 		   doc.append("Name",pd.getName());
@@ -41,6 +42,7 @@ public class ProductDaoUsingMongo {
 		       }catch(Exception e){System.out.println("Looks like no such id exist for which you want to update");} 
 	   }
 	
+	//function to view Product by Id
 	protected void viewProduct(String id){
 		Bson filter = eq("_id", id);
 		FindIterable<Document> iterDoc = mongoCollection.find(filter);
@@ -51,11 +53,13 @@ public class ProductDaoUsingMongo {
 				System.out.println(it.next());
 			}
 		}
+		//if no result matches the given filter then iterator will be empty so else part will be executed
 		else{
 			System.out.println("No such Document Exist");
 		}
 	   }
 	
+	//function to view complete list of products in collection
 	protected void listProduct(){
 		FindIterable<Document> iterDoc = mongoCollection.find();
 		// Getting the iterator
@@ -65,6 +69,7 @@ public class ProductDaoUsingMongo {
 		}
 	   }
 	
+	//function to view product by its name
 	protected void nameProduct(String name){
 		Bson filter = eq("Name",name);
 		FindIterable<Document> iterDoc = mongoCollection.find(filter);
@@ -76,12 +81,13 @@ public class ProductDaoUsingMongo {
 				System.out.println(it.next());
 			}
 		}
+		//if no result matches the given filter then iterator will be empty so else part will be executed
 		else{
 			System.out.println("No such Document Exist");
 		}
-		
 	   }
 	
+	//function to delete product by its Id
 	protected void deleteProduct(String id){
 		Bson filter = eq("_id",id);
 		mongoCollection.findOneAndDelete(filter);

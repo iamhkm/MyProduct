@@ -1,10 +1,6 @@
 package com.hkm.myTest;
 
-import static com.mongodb.client.model.Filters.eq;
-import java.util.*;
 import org.bson.Document;
-import org.bson.conversions.Bson;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
