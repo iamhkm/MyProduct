@@ -1,6 +1,10 @@
 package com.hkm.myTest;
 
+import static com.mongodb.client.model.Filters.eq;
+import java.util.*;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -36,26 +40,60 @@ public class DBConnectionMongo {
     		System.out.println("got collection");
 
     	   /*
+    	   ArrayList<Document> ad = new ArrayList<Document>();
+    	   
     	   Document doc = new Document("_Id","1");
  		   doc.append("_Name","mi");
  		   doc.append("_Quantity", "100");
  		   doc.append("_isLive", "yes");
+ 		   ad.add(doc);
+ 		   
+ 		   Document doc2 = new Document("_Id","2");
+		   doc2.append("_Name","samsung");
+		   doc2.append("_Quantity", "100");
+		   doc2.append("_isLive", "yes");
+		   ad.add(doc2);
  		   
  		   System.out.println("ok");
  		   try{
- 		   mcc.insertOne(doc);
+ 		   mcc.insertMany(ad);
  		   System.out.println("inserted");
  		   }catch(Exception e){System.out.println(e);}
  		   
+ 		   */
+    		
+    	  /*
  		  FindIterable<Document> iterDoc = mcc.find();
- 			int i = 1;
  			// Getting the iterator
  			Iterator<Document> it = iterDoc.iterator();
  			while (it.hasNext()) {
  				System.out.println(it.next());
- 				i++;
  			}
  			
+ 			
+	    	System.out.println("--------------------------------------");
+
+ 			Bson filter = eq("_Name", "samsung");
+ 			FindIterable<Document> iterDoc2 = mcc.find(filter);
+ 			// Getting the iterator
+ 			Iterator<Document> it2 = iterDoc2.iterator();
+ 			while (it2.hasNext()) {
+ 				System.out.println(it2.next());
+ 			}
+ 			
+ 			Bson filter2 = eq("_Id","2");
+ 			mcc.findOneAndDelete(filter2);
+ 			
+ 			FindIterable<Document> iterDoc3 = mcc.find(filter);
+ 			// Getting the iterator
+ 			Iterator<Document> it3 = iterDoc3.iterator();
+ 			while (it3.hasNext()) {
+ 				System.out.println(it3.next());
+ 			}
+ 			*/
+ 			
+ 			
+ 			/*
  			System.out.println("After update");
  			   
 			   mcc.updateOne(new Document("_Id","1"), new Document("$set",new Document("_Name","samsung")));

@@ -3,7 +3,6 @@ package com.hkm.myTest;
 import java.util.Iterator;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import static com.mongodb.client.model.Filters.eq;
@@ -64,7 +63,7 @@ public class ProductDaoUsingMongo {
 	   }
 	
 	protected void nameProduct(String name){
-		Bson filter = eq("Name",name);
+		Bson filter = eq("_Name",name);
 		FindIterable<Document> iterDoc = mongoCollection.find(filter);
 		// Getting the iterator
 		Iterator<Document> it = iterDoc.iterator();
@@ -72,4 +71,9 @@ public class ProductDaoUsingMongo {
 			System.out.println(it.next());
 		}
 	   }
+	
+	protected void deleteProduct(String id){
+		Bson filter = eq("_Id",id);
+		mongoCollection.findOneAndDelete(filter);
+	}
 }

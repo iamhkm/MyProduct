@@ -62,7 +62,11 @@ public class MainApp {
 				  String name = in.nextLine();
 		    	  test.nameProduct(name);break;}
 		      
-		      case 6: {System.out.println("Closing program.....");System.exit(0);}
+		      case 6: {System.out.println("Enter id of product you want to delete");
+		               String id = in.nextLine();
+		               test.deleteProduct(id);break;}
+		      
+		      case 7: {System.out.println("Closing program......");System.exit(0);}
 		      
 		      default: System.out.println("wrong input");
 		      }
