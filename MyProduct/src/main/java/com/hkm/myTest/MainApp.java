@@ -24,9 +24,8 @@ public class MainApp {
 	    		System.out.println("get database");
 	    		mcc = db.getCollection("Product");// open desired collection
 	    		System.out.println("got collection");
+	    		System.out.println(mc.getClusterDescription());
 	    	}catch(Exception e){}
-		   
-		   
 	      int x;
 	      //ProductDao test = new ProductDao();
 	      ProductDaoUsingMongo test = new ProductDaoUsingMongo();

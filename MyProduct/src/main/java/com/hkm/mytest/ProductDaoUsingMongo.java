@@ -1,10 +1,10 @@
 package com.hkm.myTest;
 
-import java.util.Iterator;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+
 import static com.mongodb.client.model.Filters.eq;
 
 public class ProductDaoUsingMongo {
@@ -45,7 +45,7 @@ public class ProductDaoUsingMongo {
 	//function to view Product by Id
 	protected void viewProduct(String id){
 		Bson filter = eq("_id", id);
-		FindIterable<Document> iterDoc = mongoCollection.find(filter);
+		/*FindIterable<Document> iterDoc = mongoCollection.find(filter);
 		// Getting the iterator
 		Iterator<Document> it = iterDoc.iterator();
 		if(it.hasNext()){
@@ -57,21 +57,45 @@ public class ProductDaoUsingMongo {
 		else{
 			System.out.println("No such Document Exist");
 		}
+		*/
+		try(MongoCursor<Document> cur = mongoCollection.find(filter).iterator();){
+			while(cur.hasNext()){
+				Document doc = cur.next();
+				System.out.println("Id:"+doc.get("_id")+" Name:"+doc.get("Name")+" Quantity:"+doc.get("Quantity")+" isLive:"+doc.get("isLive"));
+			}
+		}
 	   }
 	
 	//function to view complete list of products in collection
 	protected void listProduct(){
-		FindIterable<Document> iterDoc = mongoCollection.find();
+		
+		try(MongoCursor<Document> cur = mongoCollection.find().iterator()){
+			while(cur.hasNext()){
+				Document doc = cur.next();
+				System.out.println("Id:"+doc.get("_id")+" Name:"+doc.get("Name")+" Quantity:"+doc.get("Quantity")+" isLive:"+doc.get("isLive"));
+			}
+		}
+		
+		
+		/*FindIterable<Document> iterDoc = mongoCollection.find();
 		// Getting the iterator
 		Iterator<Document> it = iterDoc.iterator();
 		while (it.hasNext()) {
 			System.out.println(it.next());
 		}
+		*/
 	   }
 	
 	//function to view product by its name
 	protected void nameProduct(String name){
 		Bson filter = eq("Name",name);
+		try(MongoCursor<Document> cur = mongoCollection.find(filter).iterator()){
+			while(cur.hasNext()){
+				Document doc = cur.next();
+				System.out.println("Id:"+doc.get("_id")+" Name:"+doc.get("Name")+" Quantity:"+doc.get("Quantity")+" isLive:"+doc.get("isLive"));
+			}
+		}
+		/*
 		FindIterable<Document> iterDoc = mongoCollection.find(filter);
 		// Getting the iterator
 		Iterator<Document> it = iterDoc.iterator();
@@ -85,6 +109,7 @@ public class ProductDaoUsingMongo {
 		else{
 			System.out.println("No such Document Exist");
 		}
+		*/
 	   }
 	
 	//function to delete product by its Id
@@ -93,4 +118,5 @@ public class ProductDaoUsingMongo {
 		mongoCollection.findOneAndDelete(filter);
 		System.out.println("Product deleted");
 	}
+	
 }
