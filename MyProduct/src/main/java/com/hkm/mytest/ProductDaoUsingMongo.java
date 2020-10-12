@@ -4,6 +4,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Projections;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -58,6 +59,8 @@ public class ProductDaoUsingMongo {
 			System.out.println("No such Document Exist");
 		}
 		*/
+		
+		
 		try(MongoCursor<Document> cur = mongoCollection.find(filter).iterator();){
 			while(cur.hasNext()){
 				Document doc = cur.next();
@@ -69,6 +72,8 @@ public class ProductDaoUsingMongo {
 	//function to view complete list of products in collection
 	protected void listProduct(){
 		
+		// this is the correct implementation
+		/*
 		try(MongoCursor<Document> cur = mongoCollection.find().iterator()){
 			while(cur.hasNext()){
 				Document doc = cur.next();
@@ -76,6 +81,15 @@ public class ProductDaoUsingMongo {
 			}
 		}
 		
+		*/
+		
+		
+		try(MongoCursor<Document> cur = mongoCollection.find().projection(Projections.elemMatch("Id")).iterator();){
+			while (cur.hasNext()) {
+				Document doc = cur.next();
+		         System.out.println(doc);
+		      }
+		}
 		
 		/*FindIterable<Document> iterDoc = mongoCollection.find();
 		// Getting the iterator
